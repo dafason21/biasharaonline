@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biasharaonline — Mfumo wa Kusimamia Biashara</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --indigo-900:#241a5e;
+  --indigo-700:#3d2b8c;
+  --indigo-600:#4f38b8;
+  --indigo-500:#6c4fd6;
+  --violet-400:#8b6ff0;
+  --lav-50:#f4f2fb;
+  --lav-100:#ece8fa;
+  --paper:#faf9fd;
+  --ink:#231c3d;
+  --ink-soft:#6a6285;
+  --emerald:#12b886;
+  --emerald-bg:#e5f9f2;
+  --amber:#f59e0b;
+  --amber-bg:#fef3e0;
+  --rose:#f0506e;
+  --rose-bg:#fde8ec;
+  --line:#e6e1f5;
+  --radius:16px;
+  --shadow:0 8px 24px -12px rgba(36,26,94,0.18);
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Inter',sans-serif;background:var(--lav-50);color:var(--ink);}
+h1,h2,h3,.font-display{font-family:'Poppins',sans-serif;}
+
+/* ===== TOP CHROME ===== */
+.chrome{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 24px;background:var(--paper);border-bottom:1px solid var(--line);
+  gap:16px;flex-wrap:wrap;
+}
+.chrome-brand{display:flex;align-items:center;gap:10px;font-family:'Poppins';font-weight:700;font-size:18px;color:var(--indigo-700);}
+.chrome-brand .mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--indigo-600),var(--violet-400));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:15px;}
+.tabs{display:flex;gap:6px;background:var(--lav-100);padding:4px;border-radius:12px;}
+.tabs button{border:none;background:transparent;padding:8px 16px;border-radius:9px;font-family:'Inter';font-weight:600;font-size:13px;color:var(--ink-soft);cursor:pointer;transition:.15s;}
+.tabs button.active{background:var(--indigo-700);color:#fff;box-shadow:var(--shadow);}
+.langtoggle{display:flex;align-items:center;gap:8px;background:var(--lav-100);border-radius:999px;padding:4px;}
+.langtoggle button{border:none;background:transparent;padding:7px 14px;border-radius:999px;font-weight:700;font-size:12px;letter-spacing:.03em;color:var(--ink-soft);cursor:pointer;}
+.langtoggle button.active{background:var(--indigo-700);color:#fff;}
+
+/* ===== VIEWS ===== */
+.view{display:none;}
+.view.active{display:block;}
+
+/* ===== LOGIN VIEW ===== */
+.login-wrap{min-height:calc(100vh - 61px);display:flex;align-items:center;justify-content:center;padding:40px 20px;background:
+  radial-gradient(circle at 15% 20%,rgba(139,111,240,0.16),transparent 45%),
+  radial-gradient(circle at 85% 80%,rgba(18,184,134,0.10),transparent 40%), var(--lav-50);}
+.login-card{display:grid;grid-template-columns:1.1fr 1fr;max-width:920px;width:100%;background:var(--paper);border-radius:22px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line);}
+.login-side{background:linear-gradient(160deg,var(--indigo-900),var(--indigo-600) 70%);padding:40px 34px;color:#fff;display:flex;flex-direction:column;justify-content:space-between;}
+.login-side .mark-lg{width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,0.14);display:flex;align-items:center;justify-content:center;font-weight:800;font-family:'Poppins';font-size:22px;margin-bottom:22px;}
+.login-side h1{font-size:26px;margin:0 0 10px;line-height:1.25;}
+.login-side p{color:#d8d2f5;font-size:14px;line-height:1.6;margin:0;}
+.login-side .stat-row{display:flex;gap:18px;margin-top:30px;}
+.login-side .stat-row div{background:rgba(255,255,255,0.08);border-radius:12px;padding:12px 14px;flex:1;}
+.login-side .stat-row b{display:block;font-size:18px;font-family:'Poppins';}
+.login-side .stat-row span{font-size:11px;color:#c9c2ef;}
+.login-form{padding:36px 34px;}
+.formtabs{display:flex;gap:4px;background:var(--lav-100);padding:4px;border-radius:10px;margin-bottom:22px;}
+.formtabs button{flex:1;border:none;background:transparent;padding:9px;border-radius:8px;font-weight:700;font-size:13px;color:var(--ink-soft);cursor:pointer;}
+.formtabs button.active{background:#fff;color:var(--indigo-700);box-shadow:0 2px 6px rgba(36,26,94,0.12);}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;}
+.field input,.field select{width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;font-size:13px;font-family:'Inter';background:#fff;color:var(--ink);}
+.field input:focus,.field select:focus{outline:none;border-color:var(--indigo-500);}
+.pw-note{display:flex;gap:8px;align-items:flex-start;background:var(--amber-bg);border:1px solid #f6dfb0;border-radius:10px;padding:10px 12px;font-size:11.5px;color:#8a5a06;margin:2px 0 16px;line-height:1.5;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.checkrow{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--ink-soft);margin-bottom:16px;}
+.btn-primary{width:100%;padding:12px;border:none;border-radius:11px;background:linear-gradient(135deg,var(--indigo-600),var(--violet-400));color:#fff;font-weight:700;font-size:14px;cursor:pointer;box-shadow:var(--shadow);}
+.form-sub{display:none;}
+.form-sub.active{display:block;}
+
+/* ===== APP LAYOUT ===== */
+.app{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 61px);}
+.sidebar{background:linear-gradient(180deg,var(--indigo-900),var(--indigo-700));color:#fff;padding:22px 16px;display:flex;flex-direction:column;}
+.sidebar .sb-title{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#b6adf0;margin:16px 8px 8px;}
+.sidebar nav a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;color:#d8d2f5;text-decoration:none;font-size:13.5px;font-weight:500;margin-bottom:2px;}
+.sidebar nav a .dot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.5;}
+.sidebar nav a.active{background:rgba(255,255,255,0.14);color:#fff;font-weight:700;}
+.sidebar .wa-box{margin-top:auto;background:rgba(18,184,134,0.18);border:1px solid rgba(18,184,134,0.4);border-radius:12px;padding:12px;text-align:center;}
+.sidebar .wa-box button{width:100%;margin-top:8px;background:var(--emerald);border:none;color:#fff;padding:9px;border-radius:9px;font-weight:700;font-size:12px;cursor:pointer;}
+
+.main{padding:24px 28px;}
+.main-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+.main-top h2{margin:0;font-size:20px;}
+.main-top .who{font-size:12.5px;color:var(--ink-soft);}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px;}
+.pill.active{background:var(--emerald-bg);color:var(--emerald);}
+.pill.pending{background:var(--amber-bg);color:#b6790b;}
+
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px;}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);}
+.stat-card .icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:10px;}
+.stat-card .icon.money{background:var(--emerald-bg);color:var(--emerald);}
+.stat-card .icon.box{background:#eae5fc;color:var(--indigo-600);}
+.stat-card .icon.tag{background:var(--rose-bg);color:var(--rose);}
+.stat-card .icon.chart{background:var(--amber-bg);color:#b6790b;}
+.stat-card .val{font-family:'Poppins';font-size:21px;font-weight:700;}
+.stat-card .lbl{font-size:12px;color:var(--ink-soft);margin-bottom:4px;}
+.stat-card .trend{font-size:11px;color:var(--emerald);font-weight:700;}
+
+.grid3{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:16px;margin-bottom:20px;}
+.card h3{font-size:14px;margin:0 0 14px;font-family:'Poppins';}
+.card h3 span{font-weight:400;color:var(--ink-soft);font-size:12px;}
+table{width:100%;border-collapse:collapse;font-size:12.5px;}
+table th{text-align:left;color:var(--ink-soft);font-weight:600;padding:6px 4px;border-bottom:1px solid var(--line);font-size:11px;text-transform:uppercase;letter-spacing:.03em;}
+table td{padding:8px 4px;border-bottom:1px solid var(--line);}
+table tr:last-child td{border-bottom:none;}
+.total-row{display:flex;justify-content:space-between;margin-top:12px;padding-top:12px;border-top:1.5px dashed var(--line);font-weight:700;font-size:13px;}
+.total-row span:last-child{color:var(--indigo-600);}
+
+.btn-mini{border:none;background:none;cursor:pointer;color:var(--ink-soft);font-size:13px;}
+.btn-mini:hover{color:var(--indigo-600);}
+.btn-full{width:100%;padding:11px;border:none;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;margin-top:6px;}
+.btn-full.buy{background:linear-gradient(135deg,var(--indigo-600),var(--violet-400));color:#fff;}
+.btn-full.close{background:linear-gradient(135deg,#f0506e,#f2795a);color:#fff;}
+.btn-full.wa{background:var(--emerald);color:#fff;}
+.btn-full.save{background:var(--indigo-700);color:#fff;}
+.btn-full.ghost{background:var(--lav-100);color:var(--indigo-700);}
+
+.bars{display:flex;align-items:flex-end;gap:10px;height:150px;margin-bottom:6px;}
+.bars .bar{flex:1;background:linear-gradient(180deg,var(--violet-400),var(--indigo-600));border-radius:6px 6px 2px 2px;position:relative;}
+.bars .bar span{position:absolute;top:-18px;left:0;right:0;text-align:center;font-size:9px;color:var(--ink-soft);}
+.bar-days{display:flex;gap:10px;font-size:10px;color:var(--ink-soft);}
+.bar-days div{flex:1;text-align:center;}
+
+.notice{background:var(--amber-bg);border:1px solid #f6dfb0;border-radius:12px;padding:12px 14px;font-size:12.5px;color:#8a5a06;line-height:1.6;margin-bottom:12px;}
+.notice.danger{background:var(--rose-bg);border-color:#f3c1cd;color:#a12043;}
+.notice b{display:block;margin-bottom:2px;}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.tabbar{display:flex;gap:4px;background:var(--lav-100);padding:4px;border-radius:10px;margin-bottom:16px;width:fit-content;}
+.tabbar button{border:none;background:transparent;padding:8px 14px;border-radius:8px;font-size:12px;font-weight:700;color:var(--ink-soft);cursor:pointer;}
+.tabbar button.active{background:#fff;color:var(--indigo-700);box-shadow:0 2px 6px rgba(36,26,94,0.1);}
+.badge-row{display:flex;align-items:center;gap:8px;}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--indigo-100,#eae5fc);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--indigo-600);}
+
+.donut{width:110px;height:110px;border-radius:50%;background:conic-gradient(var(--emerald) 0% 68%, var(--amber) 68% 89%, var(--rose) 89% 100%);margin:0 auto 14px;position:relative;}
+.donut::after{content:'';position:absolute;inset:16px;background:var(--paper);border-radius:50%;}
+.legend{display:flex;flex-direction:column;gap:6px;font-size:12px;}
+.legend div{display:flex;align-items:center;gap:8px;}
+.legend i{width:9px;height:9px;border-radius:3px;display:inline-block;}
+
+.pay-number{background:linear-gradient(135deg,var(--indigo-900),var(--indigo-600));color:#fff;border-radius:14px;padding:18px;text-align:center;margin-bottom:12px;}
+.pay-number .num{font-family:'Poppins';font-size:22px;font-weight:800;letter-spacing:.03em;margin:6px 0;}
+.pay-number .sub{font-size:11px;color:#cfc8f2;}
+.channels{display:flex;gap:8px;justify-content:center;margin-bottom:8px;}
+.channels div{background:rgba(255,255,255,0.12);padding:6px 10px;border-radius:8px;font-size:10.5px;font-weight:700;}
+
+.fee-set{display:flex;gap:8px;}
+.fee-set input{flex:1;}
+
+/* floating whatsapp */
+.wa-float{position:fixed;bottom:22px;right:22px;width:56px;height:56px;border-radius:50%;background:var(--emerald);display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px;box-shadow:0 10px 24px -6px rgba(18,184,134,0.55);cursor:pointer;z-index:80;border:none;}
+.wa-panel{position:fixed;bottom:88px;right:22px;width:300px;background:var(--paper);border-radius:16px;box-shadow:var(--shadow);border:1px solid var(--line);overflow:hidden;display:none;z-index:80;}
+.wa-panel.open{display:block;}
+.wa-panel .wa-head{background:var(--emerald);color:#fff;padding:12px 14px;font-size:13px;font-weight:700;display:flex;justify-content:space-between;align-items:center;}
+.wa-panel .wa-body{padding:12px;font-size:12px;}
+.wa-msg{background:var(--lav-100);border-radius:10px;padding:8px 10px;margin-bottom:8px;max-width:85%;}
+.wa-msg.me{background:var(--emerald-bg);margin-left:auto;}
+
+.status-tag{font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:999px;}
+.status-tag.active{background:var(--emerald-bg);color:var(--emerald);}
+.status-tag.pending{background:var(--amber-bg);color:#b6790b;}
+
+footer.strip{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;padding:18px;background:var(--paper);border-top:1px solid var(--line);font-size:11.5px;color:var(--ink-soft);font-weight:600;}
+
+@media(max-width:920px){
+  .login-card{grid-template-columns:1fr;}
+  .login-side{display:none;}
+  .app{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  .grid4,.grid3,.grid2{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="chrome">
+  <div class="chrome-brand"><span class="mark">B</span> Biasharaonline</div>
+  <div class="tabs">
+    <button class="tabact active" data-view="login" data-sw="Kuingia / Jisajili" data-en="Login / Register">Kuingia / Jisajili</button>
+    <button class="tabact" data-view="user" data-sw="Dashibodi — Mfanyabiashara" data-en="Dashboard — Merchant">Dashibodi — Mfanyabiashara</button>
+    <button class="tabact" data-view="admin" data-sw="Dashibodi — Admin" data-en="Dashboard — Admin">Dashibodi — Admin</button>
+  </div>
+  <div class="langtoggle">
+    <button class="langbtn active" data-lang="sw">SW</button>
+    <button class="langbtn" data-lang="en">EN</button>
+  </div>
+</div>
+
+<!-- ============ LOGIN / REGISTER ============ -->
+<section class="view active" id="view-login">
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-side">
+        <div>
+          <div class="mark-lg">B</div>
+          <h1 data-sw="Simamia biashara yako popote ulipo." data-en="Run your business from anywhere.">Simamia biashara yako popote ulipo.</h1>
+          <p data-sw="Fuatilia mauzo, bidhaa na faida kwa urahisi. Admin anakuidhinisha akaunti yako baada ya malipo ya mwezi, kisha unaanza kutumia mfumo mara moja." data-en="Track sales, products and profit with ease. The admin approves your account after your monthly payment, then you can start using the system right away.">Fuatilia mauzo, bidhaa na faida kwa urahisi. Admin anakuidhinisha akaunti yako baada ya malipo ya mwezi, kisha unaanza kutumia mfumo mara moja.</p>
+          <div class="stat-row">
+            <div><b>56</b><span data-sw="Wafanyabiashara" data-en="Merchants">Wafanyabiashara</span></div>
+            <div><b>TZS 30,000</b><span data-sw="Ada ya mwezi" data-en="Monthly fee">Ada ya mwezi</span></div>
+            <div><b>24/7</b><span data-sw="Msaada WhatsApp" data-en="WhatsApp support">Msaada WhatsApp</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="login-form">
+        <div class="formtabs">
+          <button class="ftab active" data-sub="ingia" data-sw="Ingia" data-en="Log In">Ingia</button>
+          <button class="ftab" data-sub="jisajili" data-sw="Jisajili" data-en="Register">Jisajili</button>
+        </div>
+
+        <div class="form-sub active" id="sub-ingia">
+          <div class="field"><label data-sw="Barua Pepe au Simu" data-en="Email or Phone">Barua Pepe au Simu</label><input placeholder="mfano@example.com"></div>
+          <div class="field"><label data-sw="Nenosiri" data-en="Password">Nenosiri</label><input type="password" placeholder="••••••••"></div>
+          <button class="btn-primary" data-sw="Ingia kwenye Akaunti" data-en="Log In to Account">Ingia kwenye Akaunti</button>
+        </div>
+
+        <div class="form-sub" id="sub-jisajili">
+          <div class="field-row">
+            <div class="field"><label data-sw="Jina Kamili" data-en="Full Name">Jina Kamili</label><input placeholder="John Michael"></div>
+            <div class="field"><label data-sw="Jina la Duka" data-en="Shop Name">Jina la Duka</label><input placeholder="Fashion Store"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label data-sw="Namba ya Simu" data-en="Phone Number">Namba ya Simu</label><input placeholder="07XXXXXXXX"></div>
+            <div class="field"><label data-sw="Barua Pepe" data-en="Email">Barua Pepe</label><input placeholder="mfano@example.com"></div>
+          </div>
+          <div class="field"><label data-sw="Aina ya Duka" data-en="Shop Type">Aina ya Duka</label>
+            <select><option data-sw="Chagua aina ya duka" data-en="Choose shop type">Chagua aina ya duka</option><option>Maduka ya Nguo</option><option>Vyakula</option><option>Vifaa vya Umeme</option></select>
+          </div>
+          <div class="field"><label data-sw="Weka Nenosiri" data-en="Set Password">Weka Nenosiri</label><input type="password" placeholder="••••••••"></div>
+          <div class="pw-note">🔒 <span data-sw="Nenosiri lako litaonekana pia kwa Admin, ili akusaidie kuliweka upya endapo utalisahau." data-en="Your password will also be visible to the Admin, so they can help reset it if you forget it.">Nenosiri lako litaonekana pia kwa Admin, ili akusaidie kuliweka upya endapo utalisahau.</span></div>
+          <div class="checkrow"><input type="checkbox"><span data-sw="Nakubali sheria na masharti ya matumizi ya Biasharaonline" data-en="I agree to Biasharaonline's terms and conditions">Nakubali sheria na masharti ya matumizi ya Biasharaonline</span></div>
+          <button class="btn-primary" data-sw="Tengeneza Akaunti" data-en="Create Account">Tengeneza Akaunti</button>
+          <div class="notice" style="margin-top:14px;">📌 <span data-sw="Baada ya kujisajili, akaunti yako itakuwa 'Inasubiri'. Admin atakuidhinisha baada ya kupokea malipo ya mwezi." data-en="After registering, your account status will be 'Pending'. The admin will approve it once your monthly payment is received.">Baada ya kujisajili, akaunti yako itakuwa 'Inasubiri'. Admin atakuidhinisha baada ya kupokea malipo ya mwezi.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MERCHANT DASHBOARD ============ -->
+<section class="view" id="view-user">
+  <div class="app">
+    <aside class="sidebar">
+      <div class="chrome-brand" style="color:#fff;margin-bottom:6px;"><span class="mark">B</span> Biasharaonline</div>
+      <div class="sb-title" data-sw="Menyu Kuu" data-en="Main Menu">Menyu Kuu</div>
+      <nav>
+        <a href="#" class="active"><span class="dot"></span> <span data-sw="Dashibodi" data-en="Dashboard">Dashibodi</span></a>
+        <a href="#"><span class="dot"></span> <span data-sw="Bidhaa" data-en="Products">Bidhaa</span></a>
+        <a href="#"><span class="dot"></span> <span data-sw="Mauzo" data-en="Sales">Mauzo</span></a>
+        <a href="#"><span class="dot"></span> <span data-sw="Ripoti ya Wiki" data-en="Weekly Report">Ripoti ya Wiki</span></a>
+        <a href="#"><span class="dot"></span> <span data-sw="Malipo" data-en="Payments">Malipo</span></a>
+        <a href="#"><span class="dot"></span> <span data-sw="Mipangilio" data-en="Settings">Mipangilio</span></a>
+      </nav>
+      <div class="wa-box">
+        <div style="font-size:12px;font-weight:700;" data-sw="Una tatizo?" data-en="Need help?">Una tatizo?</div>
+        <div style="font-size:11px;color:#cdeee1;" data-sw="Wasiliana na Admin" data-en="Contact Admin">Wasiliana na Admin</div>
+        <button id="openWa">💬 <span data-sw="Chat WhatsApp" data-en="WhatsApp Chat">Chat WhatsApp</span></button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="main-top">
+        <div>
+          <h2 data-sw="Karibu, John" data-en="Welcome, John">Karibu, John</h2>
+          <div class="who" data-sw="Duka: Fashion Store" data-en="Shop: Fashion Store">Duka: Fashion Store</div>
+        </div>
+        <span class="pill pending">⏳ <span data-sw="Malipo: Yanasubiri — TZS 30,000 kabla ya tarehe 25" data-en="Payment: Pending — TZS 30,000 due before the 25th">Malipo: Yanasubiri — TZS 30,000 kabla ya tarehe 25</span></span>
+      </div>
+
+      <div class="notice">⚠️ <b data-sw="Kumbuka" data-en="Reminder">Kumbuka</b><span data-sw="Lipa ada ya mfumo ya mwezi huu (TZS 30,000) kabla ya tarehe 25 ili akaunti yako isisitishwe." data-en="Pay this month's system fee (TZS 30,000) before the 25th so your account isn't suspended.">Lipa ada ya mfumo ya mwezi huu (TZS 30,000) kabla ya tarehe 25 ili akaunti yako isisitishwe.</span></div>
+
+      <div class="grid4">
+        <div class="card stat-card"><div class="icon money">💰</div><div class="lbl" data-sw="Mapato ya Leo" data-en="Today's Income">Mapato ya Leo</div><div class="val">TZS 152,000</div><div class="trend">▲ 12%</div></div>
+        <div class="card stat-card"><div class="icon box">📦</div><div class="lbl" data-sw="Bidhaa Zilizouzwa" data-en="Products Sold">Bidhaa Zilizouzwa</div><div class="val" id="soldCount">3</div><div class="trend">▲ 8%</div></div>
+        <div class="card stat-card"><div class="icon tag">🏷️</div><div class="lbl" data-sw="Idadi ya Mauzo (Wiki)" data-en="Sales Count (Week)">Idadi ya Mauzo (Wiki)</div><div class="val">128</div><div class="trend">▲ 15%</div></div>
+        <div class="card stat-card"><div class="icon chart">📈</div><div class="lbl" data-sw="Faida (Wiki)" data-en="Profit (Week)">Faida (Wiki)</div><div class="val">TZS 645,000</div><div class="trend">▲ 10%</div></div>
+      </div>
+
+      <div class="grid3">
+        <div class="card">
+          <h3 data-sw="Ongeza Bidhaa Iliyouzwa" data-en="Add Sold Product">Ongeza Bidhaa Iliyouzwa</h3>
+          <div class="field"><label data-sw="Jina la Bidhaa" data-en="Product Name">Jina la Bidhaa</label><input id="pName" placeholder="Ingiza jina la bidhaa"></div>
+          <div class="field"><label data-sw="Bei (TZS)" data-en="Price (TZS)">Bei (TZS)</label><input id="pPrice" type="number" placeholder="0"></div>
+          <div class="field"><label data-sw="Idadi" data-en="Quantity">Idadi</label><input id="pQty" type="number" placeholder="0"></div>
+          <button class="btn-full buy" id="addProduct" data-sw="Hifadhi Mauzo" data-en="Save Sale">Hifadhi Mauzo</button>
+        </div>
+
+        <div class="card">
+          <h3 data-sw="Bidhaa Zilizouzwa Leo" data-en="Products Sold Today">Bidhaa Zilizouzwa Leo</h3>
+          <table>
+            <thead><tr><th>#</th><th data-sw="Bidhaa" data-en="Product">Bidhaa</th><th data-sw="Bei" data-en="Price">Bei</th><th data-sw="Idadi" data-en="Qty">Idadi</th><th data-sw="Jumla" data-en="Total">Jumla</th></tr></thead>
+            <tbody id="salesBody">
+              <tr><td>1</td><td>T-Shirt</td><td>20,000</td><td>5</td><td>100,000</td></tr>
+              <tr><td>2</td><td>Jeans</td><td>45,000</td><td>3</td><td>135,000</td></tr>
+              <tr><td>3</td><td>Viatu</td><td>30,000</td><td>2</td><td>60,000</td></tr>
+            </tbody>
+          </table>
+          <div class="total-row"><span data-sw="Jumla ya Leo" data-en="Today's Total">Jumla ya Leo</span><span id="dayTotal">TZS 295,000</span></div>
+        </div>
+
+        <div class="card">
+          <h3 data-sw="Trend ya Mauzo (Wiki)" data-en="Sales Trend (Week)">Trend ya Mauzo (Wiki)</h3>
+          <div class="bars">
+            <div class="bar" style="height:52%"><span>150K</span></div>
+            <div class="bar" style="height:64%"><span>190K</span></div>
+            <div class="bar" style="height:58%"><span>170K</span></div>
+            <div class="bar" style="height:70%"><span>210K</span></div>
+            <div class="bar" style="height:48%"><span>140K</span></div>
+            <div class="bar" style="height:85%"><span>260K</span></div>
+            <div class="bar" style="height:76%"><span>225K</span></div>
+          </div>
+          <div class="bar-days"><div>Jumatatu</div><div>Jumanne</div><div>Jumatano</div><div>Alhamisi</div><div>Ijumaa</div><div>Jumamosi</div><div>Jumapili</div></div>
+          <div class="total-row"><span data-sw="Jumla ya Wiki" data-en="Weekly Total">Jumla ya Wiki</span><span>TZS 1,245,000</span></div>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div class="card">
+          <h3 data-sw="Funga Biashara ya Leo" data-en="Close Today's Business">Funga Biashara ya Leo</h3>
+          <p style="font-size:12.5px;color:var(--ink-soft);line-height:1.6;" data-sw="Funga biashara yako ya leo baada ya kumaliza mauzo yote. Taarifa ya siku itahifadhiwa kwenye ripoti ya wiki." data-en="Close your business for today once you finish recording all sales. The day's report will be saved to your weekly report.">Funga biashara yako ya leo baada ya kumaliza mauzo yote. Taarifa ya siku itahifadhiwa kwenye ripoti ya wiki.</p>
+          <button class="btn-full close" data-sw="Funga Biashara ya Leo" data-en="Close Today's Business">Funga Biashara ya Leo</button>
+        </div>
+        <div class="card">
+          <h3 data-sw="Namba ya Malipo ya Admin" data-en="Admin Payment Number">Namba ya Malipo ya Admin</h3>
+          <div class="pay-number">
+            <div class="channels"><div>M-Pesa</div><div>Airtel Money</div><div>Tigo Pesa</div></div>
+            <div class="num">0788 123 456</div>
+            <div class="sub" data-sw="Jina: Biasharaonline Ltd" data-en="Name: Biasharaonline Ltd">Jina: Biasharaonline Ltd</div>
+          </div>
+          <p style="font-size:11.5px;color:var(--ink-soft);text-align:center;" data-sw="Lipa kabla ya tarehe 25 kila mwezi ili kuepuka kusitishwa." data-en="Pay before the 25th every month to avoid suspension.">Lipa kabla ya tarehe 25 kila mwezi ili kuepuka kusitishwa.</p>
+        </div>
+        <div class="card">
+          <h3 data-sw="Mipangilio ya Akaunti" data-en="Account Settings">Mipangilio ya Akaunti</h3>
+          <div class="field"><label data-sw="Namba ya Simu" data-en="Phone Number">Namba ya Simu</label><input value="0788123456"></div>
+          <div class="field"><label data-sw="Barua Pepe" data-en="Email">Barua Pepe</label><input value="johnmichael@gmail.com"></div>
+          <div class="field"><label data-sw="Nenosiri Jipya" data-en="New Password">Nenosiri Jipya</label><input type="password" placeholder="••••••••"></div>
+          <button class="btn-full save" data-sw="Hifadhi Mabadiliko" data-en="Save Changes">Hifadhi Mabadiliko</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
+
+<!-- ============ ADMIN DASHBOARD ============ -->
+<section class="view" id="view-admin">
+  <div class="app">
+    <aside class="sidebar" style="background:linear-gradient(180deg,#141026,#241a5e);">
+      <div class="chrome-brand" style="color:#fff;margin-bottom:6px;"><span class="mark">A</span> Admin Panel</div>
+      <div class="sb-title" data-sw="Uendeshaji" data-en="Operations">Uendeshaji</div>
+      <nav>
+        <a href="#" class="active"><span class="dot"></span> <span data-sw="Dashibodi" data-en="Dashboard">Dashibodi</span></a>
+        <a href="#"><span class="dot"></span> <span data-sw="Watumiaji" data-en="Merchants">Watumiaji</span></a>
+        <a href="#"><span class="dot"></span> <span data-sw="Malipo" data-en="Payments">Malipo</span></a>
+        <a href="#"><span class="dot"></span> <span data-sw="Ripoti" data-en="Reports">Ripoti</span></a>
+        <a href="#"><span class="dot"></span> <span data-sw="Ujumbe (WhatsApp)" data-en="Messages (WhatsApp)">Ujumbe (WhatsApp)</span></a>
+        <a href="#"><span class="dot"></span> <span data-sw="Mipangilio ya Mfumo" data-en="System Settings">Mipangilio ya Mfumo</span></a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="main-top">
+        <div>
+          <h2 data-sw="Dashibodi ya Admin" data-en="Admin Dashboard">Dashibodi ya Admin</h2>
+          <div class="who" data-sw="Msimamizi Mkuu" data-en="Super Admin">Msimamizi Mkuu</div>
+        </div>
+      </div>
+
+      <div class="grid4">
+        <div class="card stat-card"><div class="icon box">👥</div><div class="lbl" data-sw="Jumla ya Watumiaji" data-en="Total Merchants">Jumla ya Watumiaji</div><div class="val">56</div></div>
+        <div class="card stat-card"><div class="icon money">✅</div><div class="lbl" data-sw="Watumiaji Active" data-en="Active Merchants">Watumiaji Active</div><div class="val">38</div></div>
+        <div class="card stat-card"><div class="icon tag">⏳</div><div class="lbl" data-sw="Wanaosubiri Idhini" data-en="Pending Approval">Wanaosubiri Idhini</div><div class="val">12</div></div>
+        <div class="card stat-card"><div class="icon chart">📊</div><div class="lbl" data-sw="Mapato ya Mfumo (Mwezi)" data-en="System Revenue (Month)">Mapato ya Mfumo (Mwezi)</div><div class="val">TZS 1,680,000</div></div>
+      </div>
+
+      <div class="grid3">
+        <div class="card" style="grid-column:span 2;">
+          <h3 data-sw="Watumiaji Wapya / Wanaosubiri Idhini" data-en="New / Pending Merchants">Watumiaji Wapya / Wanaosubiri Idhini</h3>
+          <table>
+            <thead><tr><th data-sw="Jina" data-en="Name">Jina</th><th data-sw="Duka" data-en="Shop">Duka</th><th data-sw="Simu" data-en="Phone">Simu</th><th data-sw="Hali" data-en="Status">Hali</th><th data-sw="Kitendo" data-en="Action">Kitendo</th></tr></thead>
+            <tbody id="usersBody">
+              <tr><td>John M.</td><td>Fashion Store</td><td>0788123456</td><td><span class="status-tag active" data-sw="Active" data-en="Active">Active</span></td><td><button class="btn-mini toggleBtn">🔁</button></td></tr>
+              <tr><td>Fatma A.</td><td>Beauty Shop</td><td>0712345678</td><td><span class="status-tag active" data-sw="Active" data-en="Active">Active</span></td><td><button class="btn-mini toggleBtn">🔁</button></td></tr>
+              <tr><td>Ali K.</td><td>Kibo Store</td><td>0765123456</td><td><span class="status-tag pending" data-sw="Pending" data-en="Pending">Pending</span></td><td><button class="btn-mini toggleBtn">✅</button></td></tr>
+              <tr><td>Mary P.</td><td>Mariam Shop</td><td>0745678901</td><td><span class="status-tag pending" data-sw="Pending" data-en="Pending">Pending</span></td><td><button class="btn-mini toggleBtn">✅</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h3 data-sw="Hali ya Watumiaji" data-en="Merchant Status">Hali ya Watumiaji</h3>
+          <div class="donut"></div>
+          <div class="legend">
+            <div><i style="background:var(--emerald)"></i> <span data-sw="Active — 38 (68%)" data-en="Active — 38 (68%)">Active — 38 (68%)</span></div>
+            <div><i style="background:var(--amber)"></i> <span data-sw="Pending — 12 (21%)" data-en="Pending — 12 (21%)">Pending — 12 (21%)</span></div>
+            <div><i style="background:var(--rose)"></i> <span data-sw="Muda umeisha — 6 (11%)" data-en="Expired — 6 (11%)">Muda umeisha — 6 (11%)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div class="card">
+          <h3 data-sw="Weka Namba ya Malipo" data-en="Set Payment Number">Weka Namba ya Malipo</h3>
+          <div class="field"><label data-sw="Namba (inayoonekana kwa watumiaji wote)" data-en="Number (visible to all merchants)">Namba (inayoonekana kwa watumiaji wote)</label><input value="0788 123 456"></div>
+          <div class="field"><label data-sw="Jina la Mpokeaji" data-en="Recipient Name">Jina la Mpokeaji</label><input value="Biasharaonline Ltd"></div>
+          <button class="btn-full save" data-sw="Hifadhi Namba" data-en="Save Number">Hifadhi Namba</button>
+        </div>
+        <div class="card">
+          <h3 data-sw="Weka Ada ya Mwezi" data-en="Set Monthly Fee">Weka Ada ya Mwezi</h3>
+          <div class="field"><label data-sw="Kiasi (TZS) kwa kila mtumiaji / mwezi" data-en="Amount (TZS) per merchant / month">Kiasi (TZS) kwa kila mtumiaji / mwezi</label><input value="30,000"></div>
+          <div class="field"><label data-sw="Siku ya mwisho kulipa (tarehe)" data-en="Payment due day (date)">Siku ya mwisho kulipa (tarehe)</label><input value="25"></div>
+          <button class="btn-full save" data-sw="Hifadhi Mabadiliko" data-en="Save Changes">Hifadhi Mabadiliko</button>
+        </div>
+        <div class="card">
+          <h3 data-sw="Mauzo ya Wiki (Mfumo Mzima)" data-en="Weekly Sales (Whole System)">Mauzo ya Wiki (Mfumo Mzima)</h3>
+          <div class="bars" style="height:110px;">
+            <div class="bar" style="height:45%"></div><div class="bar" style="height:70%"></div><div class="bar" style="height:55%"></div>
+            <div class="bar" style="height:80%"></div><div class="bar" style="height:60%"></div><div class="bar" style="height:95%"></div><div class="bar" style="height:88%"></div>
+          </div>
+          <div class="total-row"><span data-sw="Jumla" data-en="Total">Jumla</span><span>TZS 4,250,000</span></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
+
+<footer class="strip">
+  <div>🛡️ <span data-sw="Usalama wa Taarifa" data-en="Data Security">Usalama wa Taarifa</span></div>
+  <div>💬 <span data-sw="Mawasiliano ya Haraka (WhatsApp)" data-en="Fast Contact (WhatsApp)">Mawasiliano ya Haraka (WhatsApp)</span></div>
+  <div>📊 <span data-sw="Ripoti za Kina" data-en="Detailed Reports">Ripoti za Kina</span></div>
+  <div>🌍 <span data-sw="Inapatikana Popote" data-en="Access Anywhere">Inapatikana Popote</span></div>
+</footer>
+
+<button class="wa-float" id="waFloat">💬</button>
+<div class="wa-panel" id="waPanel">
+  <div class="wa-head"><span data-sw="Chat na Admin" data-en="Chat with Admin">Chat na Admin</span><span id="waClose" style="cursor:pointer;">✕</span></div>
+  <div class="wa-body">
+    <div class="wa-msg" data-sw="Hujambo, nawezaje kukusaidia?" data-en="Hello, how can I help you?">Hujambo, nawezaje kukusaidia?</div>
+    <div class="wa-msg me" data-sw="Nimekamilisha malipo, naomba uthibitisho." data-en="I've completed my payment, please confirm.">Nimekamilisha malipo, naomba uthibitisho.</div>
+  </div>
+</div>
+
+<script>
+// ---- Tab switching (Login / User / Admin) ----
+document.querySelectorAll('.tabact').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tabact').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById('view-'+btn.dataset.view).classList.add('active');
+  });
+});
+
+// ---- Login / Register form toggle ----
+document.querySelectorAll('.ftab').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.form-sub').forEach(f=>f.classList.remove('active'));
+    document.getElementById('sub-'+btn.dataset.sub).classList.add('active');
+  });
+});
+
+// ---- Language toggle ----
+document.querySelectorAll('.langbtn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.langbtn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const lang = btn.dataset.lang;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-sw]').forEach(el=>{
+      el.textContent = lang === 'en' ? el.dataset.en : el.dataset.sw;
+    });
+  });
+});
+
+// ---- WhatsApp float panel ----
+document.getElementById('waFloat').addEventListener('click',()=>document.getElementById('waPanel').classList.toggle('open'));
+document.getElementById('waClose').addEventListener('click',()=>document.getElementById('waPanel').classList.remove('open'));
+document.getElementById('openWa').addEventListener('click',(e)=>{e.preventDefault();document.getElementById('waPanel').classList.add('open');});
+
+// ---- Add product row + recalc total (demo logic) ----
+let saleCount = 3;
+document.getElementById('addProduct').addEventListener('click', ()=>{
+  const name = document.getElementById('pName').value || 'Bidhaa Mpya';
+  const price = parseFloat(document.getElementById('pPrice').value) || 0;
+  const qty = parseInt(document.getElementById('pQty').value) || 0;
+  if(price<=0 || qty<=0) return;
+  saleCount++;
+  const total = price*qty;
+  const row = document.createElement('tr');
+  row.innerHTML = `<td>${saleCount}</td><td>${name}</td><td>${price.toLocaleString()}</td><td>${qty}</td><td>${total.toLocaleString()}</td>`;
+  document.getElementById('salesBody').appendChild(row);
+  const totalEl = document.getElementById('dayTotal');
+  const current = parseInt(totalEl.textContent.replace(/[^0-9]/g,''));
+  totalEl.textContent = 'TZS ' + (current+total).toLocaleString();
+  document.getElementById('soldCount').textContent = saleCount;
+  document.getElementById('pName').value='';document.getElementById('pPrice').value='';document.getElementById('pQty').value='';
+});
+
+// ---- Admin approve/toggle pending users ----
+document.querySelectorAll('.toggleBtn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const tag = btn.closest('tr').querySelector('.status-tag');
+    if(tag.classList.contains('pending')){
+      tag.classList.remove('pending');tag.classList.add('active');
+      tag.dataset.sw='Active';tag.dataset.en='Active';tag.textContent='Active';
+      btn.textContent='🔁';
+    } else {
+      tag.classList.remove('active');tag.classList.add('pending');
+      tag.dataset.sw='Pending';tag.dataset.en='Pending';tag.textContent='Pending';
+      btn.textContent='✅';
+    }
+  });
+});
+</script>
+</body>
+</html>
